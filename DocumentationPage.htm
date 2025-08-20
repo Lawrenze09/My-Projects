@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Documentation Page</title>
+      <link rel="stylesheet" href="styles/DocumentationPage.css">
+    </head>
+    <body>
+      <!-- === NAVBAR (exactly one header inside) === -->
+      <nav id="navbar" aria-label="Documentation Navigation">
+        <header>JS Arrays Documentation</header>
+          <ul>
+            <li><a class="nav-link" href="#Introduction">Introduction</a></li>
+            <li><a class="nav-link" href="#Creating_Arrays">Creating Arrays</a></li>
+            <li><a class="nav-link" href="#Reading_and_Writing">Reading and Writing</a></li>
+            <li><a class="nav-link" href="#Core_Methods">Core Methods</a></li>
+            <li><a class="nav-link" href="#Performance_Tips">Performance Tips</a></li>
+            <li><a class="nav-link" href="#FAQ">FAQ</a></li>
+          </ul>
+      </nav>
+
+      <!-- === MAIN CONTENT === -->
+      <main id="main-doc">
+        <!-- 1 -->
+        <section class="main-section" tabindex="-1" id="Introduction">
+          <header>Introduction</header>
+             <p>JavaScript <code>Array</code> objects are ordered lists of values. Arrays can grow, shrink, and contain any type, including other arrays and objects.</p>
+             <p class="callout"><strong>Key idea:</strong> Arrays are zero‑indexed. The first element is at index <code>0</code>.</p>
+             <p>The constructor <code>Array()</code> and the literal <code>[]</code> are the two primary ways to create them. You’ll use built‑in methods such as <code>push</code>, <code>map</code>, and <code>filter</code> to transform and query arrays.</p>
+              <ul>
+               <li>Zero‑indexed positions</li>
+               <li>Dynamic length</li>
+               <li>Heterogeneous elements</li>
+               <li>Common in data processing</li>
+               <li>Iterable by default</li>
+              </ul>
+                   <pre><code>// Inspecting arrays
+    const nums = [1, 2, 3];
+    console.log(nums.length); // 3
+    console.log(Array.isArray(nums)); // true</code></pre>
+          </section>
+
+          <!-- 2 -->
+          <section class="main-section" id="Creating_Arrays" tabindex="-1">
+            <header>Creating Arrays</header>
+              <p>Use literals for most cases: <code>const arr = [1, 2, 3]</code>. The <code>Array</code> constructor is useful for creating sparse arrays or with <code>Array.from</code> and <code>Array.of</code>.</p>
+              <p>Prefer explicit initialization over relying on sparse holes. Holes can surprise iteration and equality logic.</p>
+              <pre><code>// Literal vs constructors
+    const a = ["x", "y", "z"];             // literal
+    const b = Array.of(1, 2, 3);              // [1, 2, 3]
+    const c = Array.from({ length: 3 }, (_, i) => i); // [0,1,2]</code></pre>
+      <p>Arrays can nest other arrays, creating matrices or trees. Keep an eye on depth to avoid complex indexing.</p>
+          </section>
+
+          <!-- 3 -->
+        <section class="main-section" tabindex="-1" id="Reading_and_Writing">
+          <header>Reading and Writing</header>
+            <p>Access an element with bracket notation: <code>arr[index]</code>. Write by assignment: <code>arr[index] = value</code>. Out‑of‑bounds writes extend the array.</p>
+            <p>Destructuring provides a concise syntax for pulling values out:</p>
+            <pre><code>const user = ["Ada", "Lovelace", 1815];
+const [first, last, year] = user;
+console.log(first, last, year);</code></pre>
+            <p>Use the <code>length</code> property to trim or pad arrays. Setting <code>arr.length = 0</code> clears an array in place.</p>
+            </section>
+
+          <!-- 4 -->
+        <section class="main-section" tabindex="-1" id="Core_Methods">
+          <header>Core Methods</header>
+            <p>These methods are the daily drivers:</p>
+              <ul>
+                <li><code>push</code>/<code>pop</code> add/remove at the end</li>
+                <li><code>shift</code>/<code>unshift</code> add/remove at the start</li>
+                <li><code>slice</code> (non‑mutating) vs <code>splice</code> (mutating)</li>
+                <li><code>includes</code>, <code>indexOf</code>, <code>join</code></li>
+                <li><code>sort</code> and locale‑aware <code>toLocaleString</code></li>
+              </ul>
+                <pre><code>const items = [3, 1, 4];
+    items.push(1); // [3,1,4,1]
+    const top = items.pop(); // 1
+    const copy = items.slice(); // non‑mutating copy</code></pre>
+      <p>Prefer non‑mutating patterns for predictable state. Keep mutating operations contained.</p>
+        </section>
+
+          <!-- 5 -->
+        <section class="main-section" tabindex="-1" id="Performance_Tips">
+          <header>Performance Tips</header>
+            <p>Batch operations where possible. Reuse arrays with <code>length = 0</code> to clear. Avoid quadratic patterns in tight loops.</p>
+            <p>Typed arrays (<code>Uint8Array</code>, etc.) provide compact, numeric storage for heavy computation.</p>
+              <table aria-label="Big-O overview">
+                <thead>
+                  <tr><th>Operation</th><th>Typical Cost</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>push/pop</td><td>O(1)</td></tr>
+                  <tr><td>shift/unshift</td><td>O(n)</td></tr>
+                  <tr><td>random access</td><td>O(1)</td></tr>
+                  <tr><td>search (includes)</td><td>O(n)</td></tr>
+                </tbody>
+              </table>
+        </section>
+
+          <!-- 6 -->
+        <section class="main-section" tabindex="-1" id="FAQ">
+          <header>FAQ</header>
+            <p><strong>Q:</strong> How do I copy an array?
+        <br><strong>A:</strong> Use <code>slice()</code>, spread <code>[...arr]</code>, or <code>Array.from(arr)</code>.</p>
+            <p><strong>Q:</strong> Why does <code>indexOf(NaN)</code> return <code>-1</code>?
+        <br><strong>A:</strong> Because <code>NaN !== NaN</code>. Use <code>includes</code> which is <em>SameValueZero</em>-based.</p>
+            <p><strong>Q:</strong> What about objects inside arrays?
+        <br><strong>A:</strong> Copies are shallow by default; nested objects keep references.</p>
+              <pre><code>// Shallow vs deep
+    const users = [{ id:1 }, { id:2 }];
+    const copy = users.slice(); // shallow
+    copy[0].id = 99; // also changes users[0].id</code></pre>
+            <p>For deep copies, consider structured cloning (<code>structuredClone</code>) or libraries when necessary.</p>
+        </section>
+      </main>
+
+      <footer>
+        <p>© AKUJ1 • Built for the freeCodeCamp "Build a Technical Documentation Page" project.</p>
+      </footer>
+    </body>
+  </html>
